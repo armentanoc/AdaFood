@@ -8,7 +8,12 @@ namespace AdaFood.WebAPI.Filters
         public async Task OnExceptionAsync(ExceptionContext context)
         {
 
-            var statusCode = StatusCodes.Status500InternalServerError;
+            int statusCode;
+
+            if (context.Exception is UnauthorizedAccessException)
+                statusCode = StatusCodes.Status401Unauthorized;
+            else
+                statusCode = StatusCodes.Status500InternalServerError;
 
             var objectResponse = new
             {

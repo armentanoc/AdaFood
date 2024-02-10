@@ -18,6 +18,7 @@ namespace AdaFood.WebAPI
             // Service
             builder.Services.AddSingleton<ServiceHelper>();
             builder.Services.AddScoped<IDeliveryDriverService, DeliveryDriverService>();
+            builder.Services.AddTransient<AuthFilter>();
 
             // Add services to the container.
 

@@ -3,6 +3,7 @@ using AdaFood.Application.Interfaces;
 using AdaFood.Application.Services;
 using AdaFood.Domain.Models;
 using AdaFood.ViewModels;
+using AdaFood.WebAPI.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdaFood.WebAPI.Controllers
@@ -19,6 +20,7 @@ namespace AdaFood.WebAPI.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(AuthFilter))]
         public IActionResult Add([FromBody] DeliveryDriverRequest deliveryDriverRequest)
         {
             bool wasItAdded = _deliveryDriverService.Add(deliveryDriverRequest);
