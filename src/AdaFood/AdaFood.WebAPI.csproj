@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdaFood.Application\AdaFood.Application.csproj" />
+    <ProjectReference Include="..\AdaFood.ViewModels\AdaFood.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,9 @@
+using AdaFood.Application.Interfaces;
+using AdaFood.Application.Services;
+using AdaFood.Infra.Interfaces;
+using AdaFood.Infra.Repositories;
 
-using AdaFood.Repositorio;
-
-namespace AdaFood
+namespace AdaFood.WebAPI
 {
     public class Program
     {
@@ -9,12 +11,18 @@ namespace AdaFood
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<IEntregadorRepository, EntregadorRepository>();
+            // Repository
+            builder.Services.AddSingleton<IDeliveryDriverRepository, DeliveryDriverRepository>();
+
+            // Service
+            builder.Services.AddSingleton<ServiceHelper>();
+            builder.Services.AddScoped<IDeliveryDriverService, DeliveryDriverService>();
 
             // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
