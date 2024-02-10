@@ -23,23 +23,35 @@ namespace AdaFood.Application.Services
 
         public bool Delete(int id)
         {
-            return _deliveryDriverRepository.Delete(id);
+            if(Get(id) is DeliveryDriver deliveryDriver)
+                return _deliveryDriverRepository.Delete(id);
+            else 
+                throw new Exception($"Delivery driver {id} not found. Deletion couldn't be completed.");
         }
 
         public DeliveryDriver Get(int id)
         {
-            return _deliveryDriverRepository.Get(id);
+            if(_deliveryDriverRepository.Get(id) is DeliveryDriver deliveryDriver)
+                return deliveryDriver;
+            else
+                throw new Exception($"Delivery driver {id} not found");
         }
 
         public IEnumerable<DeliveryDriver> GetAll()
         {
-            return _deliveryDriverRepository.GetAll();
+            if(_deliveryDriverRepository.GetAll() is IEnumerable<DeliveryDriver> deliveryDrivers)
+                if(deliveryDrivers.Any()) return deliveryDrivers;
+            throw new Exception("Delivery drivers not found or empty.");
         }
 
         public DeliveryDriver GetByCPF(string cpf)
         {
             string digitsOnlyCpf = ServiceHelper.GetDigitsFromCpf(cpf);
-            return _deliveryDriverRepository.GetByCPF(digitsOnlyCpf);
+
+            if (_deliveryDriverRepository.GetByCPF(digitsOnlyCpf) is DeliveryDriver deliveryDriver)
+                return deliveryDriver;
+            else
+                throw new Exception($"Delivery driver CPF {cpf} not found");
         }
 
         public bool Update(DeliveryDriverRequest deliveryDriverRequest)

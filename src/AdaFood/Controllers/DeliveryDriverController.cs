@@ -1,6 +1,7 @@
 ﻿
 using AdaFood.Application.Interfaces;
 using AdaFood.Application.Services;
+using AdaFood.Domain.Models;
 using AdaFood.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace AdaFood.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddEntregador([FromBody] DeliveryDriverRequest deliveryDriverRequest)
+        public IActionResult Add([FromBody] DeliveryDriverRequest deliveryDriverRequest)
         {
             bool wasItAdded = _deliveryDriverService.Add(deliveryDriverRequest);
 
@@ -33,14 +34,25 @@ namespace AdaFood.WebAPI.Controllers
             }
         }
 
-        [HttpGet("{CPF}")]
-        public IActionResult Get([FromRoute] string CPF)
+        [HttpGet("cpf/{CPF}")]
+        public IActionResult GetByCpf([FromRoute] string CPF)
         {
-            var deliveryDriver = _deliveryDriverService.GetByCPF(CPF);
-            return Ok(deliveryDriver);
+            if(_deliveryDriverService.GetByCPF(CPF) is DeliveryDriver deliveryDriver)
+                return Ok(deliveryDriver);
+            else
+                return BadRequest();
         }
 
-        [HttpGet]
+        [HttpGet("id/{id}")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            if(_deliveryDriverService.Get(id) is DeliveryDriver deliveryDriver)
+                return Ok(deliveryDriver);
+            else 
+                return BadRequest();
+        }
+
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var deliveryDrivers = _deliveryDriverService.GetAll();

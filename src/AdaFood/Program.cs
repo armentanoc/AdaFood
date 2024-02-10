@@ -2,6 +2,7 @@ using AdaFood.Application.Interfaces;
 using AdaFood.Application.Services;
 using AdaFood.Infra.Interfaces;
 using AdaFood.Infra.Repositories;
+using AdaFood.WebAPI.Filters;
 
 namespace AdaFood.WebAPI
 {
@@ -20,7 +21,11 @@ namespace AdaFood.WebAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+                {
+                    options.Filters.Add<ExceptionFilter>();
+                });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
             builder.Services.AddEndpointsApiExplorer();
